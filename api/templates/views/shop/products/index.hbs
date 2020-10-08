@@ -127,8 +127,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form id="prodSettings">
+            <form id="prodSettings" action="/admin/shop/products?task=settings" method="post">
+                <div class="modal-body">
                     <div class="form-group">
                         <div class="custom-control custom-switch">
                             <input type="checkbox" class="custom-control-input" id="status" name="status" {{check settings.status}}>
@@ -171,24 +171,14 @@
                             <label class="custom-control-label" for="date">Дата</label>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 <script src="/assets/{{template}}/js/filterOnMainPage.js"></script>
-<script>
-    const productsSettings = $( '#prodSettings' );
-
-    productsSettings.on( 'change', () => {
-        $.post(
-                window.location.href + '?task=settings',
-                productsSettings.serialize() );
-    } );
-
-    $( '[data-dismiss="modal"]' ).click( () => location.reload() );
-</script>

@@ -76,8 +76,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form id="catSettings">
+            <form id="catSettings" action="/admin/shop/categories?task=settings" method="post">
+                <div class="modal-body">
                     <div class="form-group">
                         <div class="custom-control custom-switch">
                             <input type="checkbox" class="custom-control-input" id="status" name="status" {{check settings.status}}>
@@ -96,24 +96,14 @@
                             <label class="custom-control-label" for="image">Изображение</label>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 <script src="/assets/{{template}}/js/filterOnMainPage.js"></script>
-<script>
-    const categoriesSettings = $( '#catSettings' );
-
-    categoriesSettings.on( 'change', ( e ) => {
-        $.post(
-           window.location.href + '?task=settings',
-                categoriesSettings.serialize() );
-    } );
-
-    $( '[data-dismiss="modal"]' ).click( () => location.reload() );
-</script>

@@ -27,6 +27,7 @@ class CategoriesController extends ShopController {
    
    postSettingsAction( req, res ) {
       this.setIndexPageSettings( req, indexPageSettings );
+      res.redirect( this.baseLink );
    }
    
    async getAddAction( req, res ) {

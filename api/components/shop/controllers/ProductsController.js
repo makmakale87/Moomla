@@ -38,6 +38,7 @@ class ProductsController extends ShopController {
    
    postSettingsAction( req, res ) {
       this.setIndexPageSettings( req, indexPageSettings );
+      res.redirect( this.baseLink );
    }
    
    //====================ADD ACTION==========================
