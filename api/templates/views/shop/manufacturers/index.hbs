@@ -1,0 +1,42 @@
+<form id="adminForm">
+    <div class="card">
+        {{>page_header}}
+        <div class="card-body">
+            {{#if table}}
+                <table {{{adminTable}}}>
+                    <thead>
+                    <tr class="text-center">
+                        <th style="width: 5%"><i class="fa fa-sort"></i></th>
+                        <th style="width: 10%">Статус</th>
+                        <th>Название</th>
+                        <th style="width: 5%"><i class="fa fa-trash"></i></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each table}}
+                        <tr data-id="{{_id}}">
+                            <td class="text-center icon-move"><i class="fa fa-sort"></i></td>
+                            <td class="text-center">
+                                {{#if_eq status 'public'}}
+                                    <div class="text-success"><i class="fa fa-check" aria-hidden="true"></i></div>
+                                {{else}}
+                                    <div class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></div>
+                                {{/if_eq}}
+                            </td>
+                            <td>
+                                <div><a href="?task=edit&id={{_id}}">{{title}}</a></div>
+                                <div>Псевдоним: {{alias}}</div>
+                            </td>
+                            <td class="text-center">
+                                {{{deleteButton _id}}}
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            {{else}}
+                <p>Производители не найдены.</p>
+            {{/if}}
+        </div>
+    </div>
+</form>

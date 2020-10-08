@@ -1,0 +1,252 @@
+<form id="adminForm" enctype="multipart/form-data" class="needs-validation">
+    <div id="adminMooShop" class="card">
+        {{>page_header}}
+        <div class="card-body">
+            <div class="row">
+                <div class="col-8">
+                    <div class="form-group row">
+                        <label for="title" class="col-3 col-form-label">Название*</label>
+                        <div class="col-9">
+                            <input type="text" class="form-control" id="title" name="title" value="{{form.title}}" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="description" class="col-3 col-form-label">Описание</label>
+                        <div class="col-9">
+                            <input type="text" class="form-control" id="description" name="description" value="{{form.description}}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="description" class="col-3 col-form-label">Показывать для категорий*</label>
+                        <div class="col-9">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="allcats" id="allcats0" value="0" checked onclick="showHideCategories(true)">
+                                <label class="form-check-label" for="allcats0">Всех</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="allcats" id="allcats1" value="1" {{#if_eq form.allcats 1}}checked{{/if_eq}} onclick="showHideCategories(false)">
+                                <label class="form-check-label" for="allcats1">Выбранных</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="categories" class="form-group row">
+                        <label for="category_id" class="col-3 col-form-label">Категории*</label>
+                        <div class="col-9">
+                            {{#multiSelect form.cats}}
+                                {{{cats}}}
+                            {{/multiSelect}}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="type" class="col-3 col-form-label">Тип*</label>
+                        <div class="col-9">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="type" id="type0" value="0" checked>
+                                <label class="form-check-label" for="type0">Список</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="type" id="type1" value="1" {{#if_eq form.type 1}}checked{{/if_eq}}>
+                                <label class="form-check-label" for="type1">Множественный список</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="type" id="type2" value="2" {{#if_eq form.type 2}}checked{{/if_eq}}>
+                                <label class="form-check-label" for="type2">Текст</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="group" class="col-3 col-form-label">Группа</label>
+                        <div class="col-9">
+                            <div class="input-group mb-3">
+                                <select name="group" id="group" class="custom-select"></select>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary" type="button" title="Создать" data-task="add" onclick="showModal('Создать группу')"><i class="fa fa-plus"></i></button>
+                                    <button class="btn btn-outline-success" type="button" title="Редактировать" data-task="edit" onclick="showModal('Редактировать группу')"><i class="fa fa-edit"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="unit" class="col-3 col-form-label">Ед.изм.</label>
+                        <div class="col-3">
+                            {{#select form.unit._id}}
+                                {{{units}}}
+                            {{/select}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group row">
+                        <label for="description" class="col-3 col-form-label">Публикация</label>
+                        <div class="col-9">
+                            {{#select form.status}}
+                                <select name="status" id="status" class="form-control">
+                                    <option value="public">Публиковать</option>
+                                    <option value="unpublic">Не публиковать</option>
+                                </select>
+                            {{/select}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div id="pg_modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="pg_form" class="needs-validation">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="groupId">
+                    <input type="text" class="form-control" id="pg_title" name="pg_title" placeholder="Название" required>
+                </div>
+                <div class="modal-footer"></div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    const group_id = `{{form.group._id}}`;
+    const group_title = `{{form.group.title}}`;
+
+    $( document ).ready( function() {
+        const allcats = $( '[name="allcats"]:checked' ).val();
+        showHideCategories( allcats == 0 ? true : false );
+        //
+        $( '#groupId' ).val( group_id );
+        $( '#pg_title' ).val( group_title );
+        $( '#group' ).change( function() {
+            $( '#groupId' ).val( ($( this ).children( 'option:selected' ).val()) );
+            $( '#pg_title' ).val( ($( this ).children( 'option:selected' ).text()) );
+        } );
+        //
+        GroupApi.fetch().then( data => {
+            groups = data.concat();
+            render( groups );
+        } );
+    } );
+
+    showHideCategories = ( bool ) => {
+        const cats = $( '#categories' );
+        bool ? cats.hide() : cats.show();
+    };
+
+    function showModal( title ) {
+        if ( !title ) return;
+
+        const task = event.target.closest( 'button' ).dataset.task;
+        if ( !task ) return;
+        if ( task === 'edit' && !$( '#groupId' ).val() ) return;
+
+        let modal = $( '#pg_modal' );
+        let header = $( '#pg_modal .modal-title' ).text( '' );
+        let footer = $( '#pg_modal .modal-footer' ).html( '' );
+
+        header.html( title );
+
+        modalSubmit = (task === 'add') ? onCreateGroup : onEditGroup;
+
+        footer.append( `<button type="button" class="btn btn-primary" onclick="modalSubmit()">Сохранить</button>` );
+        if ( task === 'edit' ) {
+            footer.append( `<button type="button" class="btn btn-danger js-remove" onclick="onDeleteGroup()">Удалить</button>` );
+        }
+        footer.append( `<button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>` );
+
+        modal.modal( 'show' );
+    }
+
+    //---------------------------------------------------------------------------------------
+    const option = group => {
+        return `<option value="${group._id}" ${group_id === group._id ? selected = 'selected' : ''}>
+                    ${group.title} ${group.description ? `(${group.description})` : ''}
+                </option>`;
+    };
+
+    const BASE_URL = '/admin/shop/productfields?task=groups';
+    let groups = [];
+
+    class GroupApi {
+        static fetch() {
+            return fetch( BASE_URL, { method : 'get' } ).then( res => res.json() );
+        }
+
+        static action( method, data ) {
+            return fetch( BASE_URL, {
+                method  : method,
+                body    : JSON.stringify( data ),
+                headers : {
+                    'Accept'       : 'application/json',
+                    'Content-Type' : 'application/json'
+                }
+            } ).then( res => res.json() );
+        }
+    }
+
+    function render( _groups = [] ) {
+        const $groups = $( '#group' );
+
+        let html = `<option value="0">- - -</option>
+        ${_groups.length ?
+                _groups.map( group => option( group ) ).join( ' ' )
+                : ''
+        }`;
+
+        $groups.html( html );
+    }
+
+    function onCreateGroup() {
+        const $title = $( '#pg_title' );
+
+        if ( $title.val() ) {
+            const newGroup = { title : $title.val() };
+
+            GroupApi.action( 'post', newGroup ).then( _groups => {
+                render( _groups );
+            } );
+
+            $title.val( '' );
+            $( '#pg_modal' ).modal( 'hide' );
+        }
+    }
+
+    function onEditGroup() {
+        const $id = $( '#groupId' ).val();
+        const $title = $( '#pg_title' );
+
+        if ( $title.val() ) {
+            const data = { id : $id, title : $title.val() };
+
+            GroupApi.action( 'put', data ).then( _groups => {
+                render( _groups );
+            } );
+            $( '#pg_modal' ).modal( 'hide' );
+        }
+    }
+
+    function onDeleteGroup() {
+        if ( event.target.classList.contains( 'js-remove' ) ) {
+            const id = $( '#groupId' ).val();
+            if ( id === group_id ) {
+                $( '#pg_modal' ).modal( 'hide' );
+                showMessage( 'warning', 'Нельзя удалить элемент, который используется.' );
+                return;
+            }
+
+            const decision = confirm( 'Вы уверены?' );
+
+            if ( decision ) {
+                GroupApi.action( 'delete', { _id : id } ).then( _groups => {
+                    render( _groups );
+                } );
+                $( '#pg_modal' ).modal( 'hide' );
+                showMessage( 'success', 'Элемент удален' );
+                $( '#groupId' ).val( (group_id) );
+                $( '#pg_title' ).val( group_title );
+            }
+        }
+    }
+
+</script>

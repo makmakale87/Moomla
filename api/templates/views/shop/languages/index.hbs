@@ -1,0 +1,43 @@
+<form id="adminForm">
+    <div class="card">
+        {{>page_header}}
+        <div class="card-body">
+            {{#if table}}
+                <table {{{adminTable}}}>
+                    <thead>
+                    <tr class="text-center">
+                        <th style="width: 5%"><i class="fa fa-sort"></i></th>
+                        <th class="text-center">Статус</th>
+                        <th>Название</th>
+                        <th>По умолчанию</th>
+                        <th style="width: 5%"><i class="fa fa-trash"></i></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each table}}
+                        <tr data-id="{{_id}}">
+                            <td class="text-center icon-move"><i class="fa fa-sort"></i></td>
+                            <td class="text-center">{{{getStatus status}}}</td>
+                            <td><a href="?task=edit&id={{_id}}">{{title}}</a></td>
+                            <td class="text-center">
+                                {{#if_eq isDefault true}}
+                                    <button type="button" class="btn btn-sm btn-success" onclick="setDefault(`{{_id}}`)">
+                                        <i class="fa fa-star"></i></button>
+                                {{else}}
+                                    <button type="button" class="btn btn-sm btn-light" onclick="setDefault(`{{_id}}`)">
+                                        <i class="fa fa-star"></i></button>
+                                {{/if_eq}}
+                            </td>
+                            <td class="text-center">
+                                {{{deleteButton _id}}}
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            {{else}}
+                <p>Языки не найдены.</p>
+            {{/if}}
+        </div>
+    </div>
+</form>

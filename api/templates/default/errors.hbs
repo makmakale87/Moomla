@@ -1,0 +1,19 @@
+<div class="container mt-5">
+    <div class="row {{#unless debug}}text-center{{/unless}}">
+        <div class="col">
+            <div class="display-4">Страница не найдена!</div>
+            <hr>
+            {{#if debug}}
+                <p>{{{error.message}}}</p>
+                <p>
+                <pre>{{{error.stack}}}</pre>
+                </p>
+            {{else}}
+                <div>
+                    <img src="/assets/{{template}}/img/404.png" alt="404">
+                </div>
+            {{/if}}
+            <div class="mt-5"><a href="/admin" class="btn btn-primary">Назад в админку</a></div>
+        </div>
+    </div>
+</div>

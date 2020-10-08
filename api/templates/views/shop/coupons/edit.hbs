@@ -1,0 +1,69 @@
+<form id="adminForm" enctype="multipart/form-data" class="needs-validation">
+    <div id="adminMooShop" class="card">
+        {{>page_header}}
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group row">
+                        <label for="title" class="col-3 col-form-label">Код купона*</label>
+                        <div class="col-9">
+                            <input type="text" class="form-control" name="title" id="title" value="{{form.title}}" placeholder="Код купона" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="coupon_type" class="col-3 col-form-label">Тип*</label>
+                        <div class="col-9">
+                            <select name="coupon_type" id="coupon_type" class="custom-select" onchange="changeCouponType()">
+                                <option value="0">Процент</option>
+                                <option value="1">Значение</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="coupon_value" class="col-3 col-form-label">Значение*</label>
+                        <div class="col-9 input-group">
+                            <input type="text" class="form-control" name="coupon_value" id="coupon_value" value="{{form.coupon_value}}" placeholder="Значение">
+                            <div class="input-group-append">
+                                <span class="input-group-text coupon_value_span">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="coupon_start_date" class="col-3 col-form-label">Дата начала</label>
+                        <div class="col-9">
+                            <input type="date" class="form-control" name="coupon_start_date" id="coupon_start_date">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="coupon_end_date" class="col-3 col-form-label">Дата завершения</label>
+                        <div class="col-9">
+                            <input type="date" class="form-control" name="coupon_end_date" id="coupon_end_date">
+                        </div>
+                    </div>
+                    <div class="col-9 offset-sm-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="end_after_use" name="end_after_use" {{#if form.end_after_use}}checked{{/if}}>
+                            <label class="form-check-label" for="end_after_use">
+                                Завершается после использования
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    document.addEventListener( 'DOMContentLoaded', () => {
+        const coupon_start_date = new Date( `{{form.coupon_start_date}}` ).toISOString().slice( 0, 10 );
+        document.getElementById( 'coupon_start_date' ).value = coupon_start_date;
+
+        const coupon_end_date = new Date( `{{form.coupon_end_date}}` ).toISOString().slice( 0, 10 );
+        document.getElementById( 'coupon_end_date' ).value = coupon_end_date;
+    } );
+
+    function changeCouponType() {
+        console.log( event.target );
+    }
+</script>

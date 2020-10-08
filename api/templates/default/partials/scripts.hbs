@@ -1,0 +1,29 @@
+<!--Scripts-->
+<script src="/assets/{{template}}/js/bs-custom-file-input.min.js"></script>
+<script src="/assets/{{template}}/js/toolbar.js"></script>
+<script src="/assets/{{template}}/js/jquery-ui.min.js"></script>
+<script src="/assets/{{template}}/js/ui-sortable.js"></script>
+<script src="/assets/{{template}}/js/messages.js"></script>
+<script>
+    $( document ).ready( function() {
+        bsCustomFileInput.init();
+    } );
+
+    $( '#deleteIMG' ).click( async () => {
+        let response = await fetch( window.location.href, {
+            method : 'delete'
+        } );
+        let result = await response.json();
+        if ( result.deleted ) {
+            location.reload();
+        }
+    } );
+
+    function setDefault( id ) {
+        $.post( '?task=setDefault', { id : id }, function( data ) {
+            if ( data.updated ) {
+                location.reload();
+            }
+        } );
+    }
+</script>

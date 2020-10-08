@@ -1,0 +1,194 @@
+<form id="adminForm">
+    <div class="card">
+        {{>page_header}}
+        <div class="card-body">
+            <div class="tools mb-3">
+                <div class="row">
+                    <div class="col-2 ml-auto text-right">
+                        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#productsOptions">Опции</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <label for="filter[search]">Поиск</label>
+                        <div class="input-group">
+                            <input id="search" name="filter[search]" type="text" class="form-control" placeholder="Поиск" value="{{filter.search}}">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit" onclick="search.value = '';"><i class="fa fa-times"></i></button>
+                                <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <label for="filter[parent]">Категории</label>
+                        {{#select filter.parent}}
+                            {{{categories}}}
+                        {{/select}}
+                    </div>
+                    <div class="col-3">
+                        <label for="filter[manufacturer]">Производители</label>
+                        {{#select filter.manufacturer}}
+                            {{{manufacturers}}}
+                        {{/select}}
+                    </div>
+                    {{#if MShopConfig.admin_show_product_labels}}
+                        <div class="col-3">
+                            <label for="filter[mark]">Метки</label>
+                            {{#select filter.mark}}
+                                {{{marks}}}
+                            {{/select}}
+                        </div>
+                    {{/if}}
+                </div>
+
+            </div>
+            {{#if table}}
+                <table {{{adminTable}}}>
+                    <thead>
+                    <tr class="text-center">
+                        <th style="width: 5%"><i class="fa fa-sort"></i></th>
+                        {{#if settings.status}}
+                            <th>Статус</th>{{/if}}
+                        {{#if settings.image}}
+                            <th>Изображение</th>{{/if}}
+                        <th>Название</th>
+                        {{#if settings.category}}
+                            <th>Категория</th>{{/if}}
+                        {{#if settings.manufacturer}}
+                            <th>Производитель</th>{{/if}}
+                        {{#if settings.price}}
+                            <th>Цена</th>{{/if}}
+                        {{#if settings.count}}
+                            <th>Количество</th>{{/if}}
+                        {{#if settings.date}}
+                            <th>Дата создания</th>{{/if}}
+                        <th><i class="fa fa-trash"></i></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each table}}
+                        <tr data-id="{{_id}}">
+                            <td class="text-center icon-move"><i class="fa fa-sort"></i></td>
+                            {{#if ../settings.status}}
+                                <td class="text-center">
+                                    {{#if_eq status 'public'}}
+                                        <div class="text-success"><i class="fa fa-check" aria-hidden="true"></i></div>
+                                    {{else}}
+                                        <div class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></div>
+                                    {{/if_eq}}
+                                </td>
+                            {{/if}}
+                            {{#if ../settings.image}}
+                                <td class="text-center">{{#if image}}<img src="{{image}}" alt="{{title}}" style="max-height: 60px" class="img-thumbnail">{{/if}}</td>
+                            {{/if}}
+                            <td><a href="?task=edit&id={{_id}}">{{title}}</a></td>
+                            {{#if ../settings.category}}
+                                <td>{{parent.title}}</td>
+                            {{/if}}
+                            {{#if ../settings.manufacturer}}
+                                <td class="text-center">{{manufacturer.title}}</td>
+                            {{/if}}
+                            {{#if ../settings.price}}
+                                <td class="text-right">
+                                    {{#if_eq ../MShopConfig.display_price_admin 0}}
+                                        {{fullprice}}
+                                    {{else}}
+                                        {{price}}
+                                    {{/if_eq}}
+                                </td>
+                            {{/if}}
+                            {{#if ../settings.count}}
+                                <td class="text-center">{{#if unlimit}}&infin;{{else}}{{count}}{{/if}}</td>
+                            {{/if}}
+                            {{#if ../settings.date}}
+                                <td class="text-center">{{{formatDate created_at ../MShopConfig.date_format}}}</td>
+                            {{/if}}
+                            <td class="text-center">
+                                {{{deleteButton _id}}}
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            {{else}}
+                <p>Товары не найдены.</p>
+            {{/if}}
+        </div>
+    </div>
+</form>
+
+<!-- Modal -->
+<div class="modal fade" id="productsOptions" tabindex="-1" aria-labelledby="productsOptionsLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productsOptionsLabel">Выберите колонки для отображения</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="prodSettings">
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="status" name="status" {{check settings.status}}>
+                            <label class="custom-control-label" for="status">Статус</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="image" name="image" {{check settings.image}}>
+                            <label class="custom-control-label" for="image">Изображение</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="category" name="category" {{check settings.category}}>
+                            <label class="custom-control-label" for="category">Категория</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="manufacturer" name="manufacturer" {{check settings.manufacturer}}>
+                            <label class="custom-control-label" for="manufacturer">Производитель</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="price" name="price" {{check settings.price}}>
+                            <label class="custom-control-label" for="price">Цена</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="count" name="count" {{check settings.count}}>
+                            <label class="custom-control-label" for="count">Количество</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="date" name="date" {{check settings.date}}>
+                            <label class="custom-control-label" for="date">Дата</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/assets/{{template}}/js/filterOnMainPage.js"></script>
+<script>
+    const productsSettings = $( '#prodSettings' );
+
+    productsSettings.on( 'change', () => {
+        $.post(
+                window.location.href + '?task=settings',
+                productsSettings.serialize() );
+    } );
+
+    $( '[data-dismiss="modal"]' ).click( () => location.reload() );
+</script>

@@ -1,0 +1,31 @@
+<form id="adminForm">
+    <div class="card">
+        {{>page_header}}
+        <div class="card-body">
+            <table {{{adminTable}}}>
+                <thead>
+                <tr class="text-center">
+                    <th style="width: 5%"><i class="fa fa-sort"></i></th>
+                    <th>Статус</th>
+                    <th>Имя</th>
+                    <th>Логин</th>
+                    <th>Email</th>
+                    <th>Роль</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each users}}
+                    <tr>
+                        <td class="text-center icon-move"><i class="fa fa-sort"></i></td>
+                        <td class="text-center">{{{getStatus status}}}</td>
+                        <td><a href="?task=edit&id={{_id}}">{{ name }}</a></td>
+                        <td class="text-center">{{ login }}</td>
+                        <td class="text-center">{{ email }}</td>
+                        <td class="text-center">{{ role }}</td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>

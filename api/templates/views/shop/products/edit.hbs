@@ -1,0 +1,370 @@
+<form id="adminForm" enctype="multipart/form-data" class="needs-validation">
+    <div id="adminMooShop" class="card">
+        {{>page_header}}
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a data-toggle="tab" class="nav-link active" href="#main">Описание</a>
+                </li>
+                <li class="nav-item">
+                    <a data-toggle="tab" class="nav-link" href="#prod">Информация о товаре</a>
+                </li>
+                <li class="nav-item">
+                    <a data-toggle="tab" class="nav-link" href="#extra_fields">Характеристики</a>
+                </li>
+                {{#if MShopConfig.admin_show_product_files}}
+                    <li class="nav-item">
+                        <a data-toggle="tab" class="nav-link" href="#files">Файлы</a>
+                    </li>
+                {{/if}}
+                {{#if MShopConfig.admin_show_product_video}}
+                    <li class="nav-item">
+                        <a data-toggle="tab" class="nav-link" href="#videos">Видео</a>
+                    </li>
+                {{/if}}
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content">
+                <div id="main" class="tab-pane active">
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="form-group row">
+                                <label for="title" class="col-3 col-form-label">Заголовок*</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control" name="title" id="title" value="{{form.title}}" placeholder="Заголовок" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="alias" class="col-3 col-form-label">Псевдоним</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control" name="alias" id="alias" value="{{form.alias}}" placeholder="Псевдоним">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="short_description" class="col-3 col-form-label">Краткое описание</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control" name="short_description" id="short_description" placeholder="Краткое описание" value="{{form.short_description}}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="description" class="col-3 col-form-label">Полное описание</label>
+                                <div class="col-9">
+                                    <textarea class="form-control" id="mooEditor" name="description">{{{form.description}}}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="meta_title" class="col-3 col-form-label">Meta title</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control" name="meta_title" id="meta_title" value="{{form.meta_title}}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="meta_description" class="col-3 col-form-label">Meta description</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control" name="meta_description" id="meta_description" value="{{form.meta_description}}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="meta_keywords" class="col-3 col-form-label">Meta keywords</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control" name="meta_keywords" id="meta_keywords" value="{{form.meta_keywords}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="status">Публикация</label>
+                                {{#select form.status}}
+                                    <select name="status" id="status" class="form-control">
+                                        <option value="public">Публиковать</option>
+                                        <option value="unpublic">Не публиковать</option>
+                                    </select>
+                                {{/select}}
+                            </div>
+                            <div class="form-group">
+                                <label for="parent">Родительский элемент</label>
+                                {{#select form.parent._id}}
+                                    {{{parents}}}
+                                {{/select}}
+                            </div>
+                            <div class="form-group">
+                                <label for="imgFile">Изображение</label>
+                                <div class="custom-file">
+                                    <input type="file" name="image" class="custom-file-input" id="imgFile" data-img="{{form.image}}">
+                                    <label class="custom-file-label" id="imgFileLabel" for="imgFile">Выбрать</label>
+                                </div>
+                            </div>
+                            {{#if form.image}}
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <img src="{{form.image}}" alt="{{form.title}}" class="img-thumbnail mb-3" style="max-height: 200px">
+                                        <button id="deleteIMG" type="button" class="btn btn-danger btn-sm">&times; Удалить изображение</button>
+                                    </div>
+                                </div>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+                <div id="prod" class="tab-pane">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    {{#if MShopConfig.admin_show_product_basic_price}}
+                                        <div class="form-group row">
+                                            <label for="new_price" class="col-3 col-form-label">Новая цена</label>
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" name="new_price" id="new_price" value="{{form.new_price}}" placeholder="Новая цена">
+                                            </div>
+                                        </div>
+                                    {{/if}}
+                                    <div class="form-group row">
+                                        <label for="fullprice" class="col-3 col-form-label">Цена*</label>
+                                        <div class="col-9">
+                                            <input type="text" class="form-control" name="fullprice" id="fullprice" value="{{form.fullprice}}" placeholder="Цена" required onblur="getPrice()">
+                                        </div>
+                                    </div>
+                                    {{#if MShopConfig.tax}}
+                                        <div class="form-group row">
+                                            <label for="taxes" class="col-3 col-form-label">Налог</label>
+                                            <div class="col-9">
+                                                {{#select form.taxes}}
+                                                    <select name="taxes" id="taxes" class="custom-select" onchange="getPrice()">
+                                                        <option value="-1">---</option>
+                                                        {{#if form.taxes}}
+                                                            {{#each taxes}}
+                                                                <option value="{{tax_value}}">{{title}}</option>
+                                                            {{/each}}
+                                                        {{else}}
+                                                            {{#each taxes}}
+                                                                <option value="{{tax_value}}" {{#if isDefault}}selected{{/if}}>{{title}}</option>
+                                                            {{/each}}
+                                                        {{/if}}
+                                                    </select>
+                                                {{/select}}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="price" class="col-3 col-form-label">Цена без НДС</label>
+                                            <div class="col-9">
+                                                <input type="text" class="form-control" name="price" id="price" value="{{form.price}}" placeholder="Цена без НДС">
+                                            </div>
+                                        </div>
+                                    {{/if}}
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="product_code" class="col-3 col-form-label">Код товара</label>
+                                        <div class="col-9">
+                                            <input type="text" class="form-control" name="product_code" id="product_code" value="{{form.product_code}}" placeholder="Код товара">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="count" class="col-3 col-form-label">Количество</label>
+                                        <div class="col-9">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control w-75" name="count" id="count" value="{{form.count}}" placeholder="Количество">
+                                                {{#if MShopConfig.admin_show_units}}
+                                                    <select name="units" id="units" class="custom-select w-25">
+                                                        {{#each units}}
+                                                            {{#if form.units}}
+                                                                {{#select form.units._id}}
+                                                                    <option value="{{_id}}">{{title}}</option>
+                                                                {{/select}}
+                                                            {{else}}
+                                                                <option value="{{_id}}" {{#if isDefault}}selected{{/if}}>{{title}}</option>
+                                                            {{/if}}
+                                                        {{/each}}
+                                                    </select>
+                                                {{/if}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-3"></div>
+                                        <div class="col-9">
+                                            <div class="form-group form-check">
+                                                <input type="checkbox" class="form-check-input" id="unlimit" name="unlimit" {{#if form.unlimit}}checked{{/if}} onchange="disableCount()">
+                                                <label class="form-check-label" for="unlimit">Неограничено</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{#if MShopConfig.admin_show_product_labels}}
+                                        <div class="form-group row">
+                                            <label for="mark" class="col-3 col-form-label">Метка</label>
+                                            <div class="col-9">
+                                                {{#select form.mark._id}}
+                                                    {{{marks}}}
+                                                {{/select}}
+                                            </div>
+                                        </div>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="manufacturer" class="col-3 col-form-label">Название производителя</label>
+                                        <div class="col-9">
+                                            {{#select form.manufacturer._id}}
+                                                {{{manufacturers}}}
+                                            {{/select}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="deliverytimes" class="col-3 col-form-label">Срок поставки</label>
+                                        <div class="col-9">
+                                            {{#select form.deliverytimes._id}}
+                                                {{{deliverytimes}}}
+                                            {{/select}}
+                                        </div>
+                                    </div>
+                                    {{#if MShopConfig.admin_show_weight}}
+                                        <div class="form-group row">
+                                            <label for="weight" class="col-3 col-form-label">Вес</label>
+                                            <div class="col-9">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="weight" id="weight" value="{{form.weight}}" placeholder="Вес">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">кг.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="extra_fields" class="tab-pane">
+                    <div class="row">
+                        {{#each extra_fields}}
+                            <div class="col-6">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        {{#if group}}
+                                            <h5>{{group.title}}</h5>
+                                        {{/if}}
+
+                                        {{#each fields}}
+                                            {{#if_eq type 0}}
+                                                <div class="form-group row">
+                                                    <label for="exf_{{_id}}" class="col-3 col-form-label">{{title}}</label>
+                                                    <div class="col-9">
+                                                        {{#if unit}}
+                                                            <div class="input-group mb-3">
+                                                                <select name="extra_fields[{{_id}}]" id="exf_{{_id}}" class="form-control">
+                                                                    {{#select (extra_field ../../form.extra_fields _id)}}
+                                                                        <option value="0">---</option>
+                                                                        {{#each values}}
+                                                                            <option value="{{_id}}">{{title}}</option>
+                                                                        {{/each}}
+                                                                    {{/select}}
+                                                                </select>
+                                                                <div class="input-group-append">
+                                                                    <span class="input-group-text">{{unit.title}}</span>
+                                                                </div>
+                                                            </div>
+                                                        {{else}}
+                                                            <select name="extra_fields[{{_id}}]" id="exf_{{_id}}" class="form-control">
+                                                                {{#select (extra_field ../../form.extra_fields _id)}}
+                                                                    <option value="0">---</option>
+                                                                    {{#each values}}
+                                                                        <option value="{{_id}}">{{title}}</option>
+                                                                    {{/each}}
+                                                                {{/select}}
+                                                            </select>
+                                                        {{/if}}
+                                                    </div>
+                                                </div>
+                                            {{/if_eq}}
+                                            {{#if_eq type 1}}
+                                                <div class="form-group row">
+                                                    <label for="exf_{{_id}}" class="col-3 col-form-label">{{title}}</label>
+                                                    <div class="col-9">
+                                                        <select name="extra_fields[{{_id}}]" id="exf_{{_id}}" class="form-control" size="5" multiple>
+                                                            {{#multiSelect (extra_field ../../form.extra_fields _id)}}
+                                                                <option value="0">---</option>
+                                                                {{#each values}}
+                                                                    <option value="{{_id}}">{{title}}</option>
+                                                                {{/each}}
+                                                            {{/multiSelect}}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            {{/if_eq}}
+                                            {{#if_eq type 2}}
+                                                <div class="form-group row">
+                                                    <label for="exf_{{_id}}" class="col-3 col-form-label">{{title}}</label>
+                                                    <div class="col-9">
+                                                        {{#if unit}}
+                                                            <div class="input-group mb-3">
+                                                                <input type="text" class="form-control" name="extra_fields[{{_id}}]" id="exf_{{_id}}" value="{{extra_field ../../form.extra_fields _id}}">
+                                                                <div class="input-group-append">
+                                                                    <span class="input-group-text">{{unit.title}}</span>
+                                                                </div>
+                                                            </div>
+                                                        {{else}}
+                                                            <input type="text" class="form-control" name="extra_fields[{{_id}}]" id="exf_{{_id}}" value="{{extra_field ../../form.extra_fields _id}}">
+                                                        {{/if}}
+                                                    </div>
+                                                </div>
+                                            {{/if_eq}}
+                                        {{/each}}
+                                    </div>
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+                {{#if MShopConfig.admin_show_product_files}}
+                    <div id="files" class="tab-pane">
+
+                    </div>
+                {{/if}}
+                {{#if MShopConfig.admin_show_product_video}}
+                    <div id="videos" class="tab-pane">
+
+                    </div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</form>
+
+<script src="/assets/{{template}}/js/editor.js"></script>
+<script src="/assets/{{template}}/js/uploadImg.js"></script>
+<script>
+
+    $( document ).ready( function() {
+        const unlimit = $( '#unlimit' ).attr( 'checked' );
+        if ( unlimit ) {
+            disableCount();
+        }
+    } );
+
+    function getPrice() {
+        let taxes = $( '#taxes' ),
+                tax = parseFloat( taxes.val() ) || 0;
+        tax = tax > 0 ? tax : 0;
+        let fullprice = parseFloat( $( '#fullprice' ).val().replace( ',', '.' ) ),
+                price = $( '#price' ),
+                price_val = fullprice / (100 + tax) * 100;
+        price.val( price_val.toFixed( 2 ) );
+    }
+
+    function disableCount() {
+        $( '#count' ).attr( 'disabled', function( _, attr ) {
+            $( '#count' ).val( '' );
+            return !attr;
+        } );
+    }
+
+</script>

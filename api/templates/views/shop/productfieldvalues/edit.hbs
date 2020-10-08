@@ -1,0 +1,25 @@
+<form id="adminForm" enctype="multipart/form-data" class="needs-validation">
+    <div id="adminMooShop" class="card">
+        {{>page_header}}
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group row">
+                        <label for="title" class="col-3 col-form-label">Заголовок*</label>
+                        <div class="col-9">
+                            <input type="text" class="form-control" name="title" id="title" value="{{form.title}}" placeholder="Заголовок" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="field_id" class="col-3 col-form-label">Характеристика</label>
+                        <div class="col-9">
+                            {{#select form.field_id}}
+                                {{{fields}}}
+                            {{/select}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

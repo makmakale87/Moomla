@@ -1,0 +1,53 @@
+<form id="adminForm" enctype="multipart/form-data" class="needs-validation">
+    <div id="adminMooShop" class="card">
+        {{>page_header}}
+        <div class="card-body">
+            <div class="form-group row">
+                <label for="title" class="col-sm-2 col-form-label">Заголовок*</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="title" id="title" value="{{form.title}}" placeholder="Заголовок" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="color_bg" class="col-sm-2 col-form-label">Цвет фона</label>
+                <div class="col">
+                    <input id="color_bg" name="color_bg" value='{{#if form.color_bg}}{{form.color_bg}}{{else}}#ccc{{/if}}' class="form-control"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="title" class="col-sm-2 col-form-label">Цвет текста</label>
+                <div class="col">
+                    <input id="color_text" name="color_text" value='{{#if form.color_text}}{{form.color_text}}{{else}}#000{{/if}}' class="form-control"/>
+                </div>
+            </div>
+            <button id="demoBtn" type="button" class="btn">BUTTON</button>
+        </div>
+    </div>
+</form>
+
+
+<script>
+    $( '#color_bg' ).spectrum( {
+        type                   : 'component',
+        hideAfterPaletteSelect : 'true',
+        showInput              : 'true',
+        change                 : function( color ) {
+            $( '#demoBtn' ).css( 'background-color', color.toHexString() );
+        }
+    } );
+    $( '#color_text' ).spectrum( {
+        type                   : 'component',
+        hideAfterPaletteSelect : 'true',
+        showInput              : 'true',
+        change                 : function( color ) {
+            $( '#demoBtn' ).css( 'color', color.toHexString() );
+        }
+    } );
+    $( document ).ready( function() {
+        $( '#demoBtn' ).css( {
+            'background-color' : $( '#color_bg' ).val(),
+            'color'            : $( '#color_text' ).val()
+        } );
+    } );
+</script>

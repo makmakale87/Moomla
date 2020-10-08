@@ -1,0 +1,169 @@
+@mixin flex-center() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin card-shadow($x, $y, $blur) {
+  box-shadow: #{$x}px #{$y}px #{$blur}px rgba(206, 214, 224, 1.0),
+  -#{$x}px -#{$y}px #{$blur}px rgba(255, 255, 255, 1.0);
+}
+
+@mixin text-shadow() {
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100vh;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background-image: url('../img/login/bg-login.jpg');
+  background-position: bottom center;
+  background-size: cover;
+  background-attachment: fixed;
+
+  &.login {
+    width: 100%;
+    @include flex-center()
+  }
+}
+
+main {
+  margin-top: 30px;
+  flex-grow: 1;
+
+  .container {
+    max-width: 1440px;
+  }
+
+  #adminToolbar {
+    .btn {
+      padding: 0;
+      margin: 0;
+      outline: 0;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      @include flex-center();
+      box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3),
+      inset 0 5px 5px rgba(255, 255, 255, 0.5),
+      inset 0 -5px 5px rgba(0, 0, 0, 0.25);
+      transition: 0.4s;
+
+      &:hover {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2),
+        inset 0 5px 5px rgba(255, 255, 255, 0.5),
+        inset 0 -5px 5px rgba(0, 0, 0, 0.25);
+      }
+
+      .fa {
+        font-size: 24px;
+      }
+    }
+  }
+
+  #adminMooShop {
+    &.adminMooShopList {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      grid-gap: 20px;
+
+      .moo-card {
+        position: relative;
+
+        img {
+          display: block;
+          width: 50px;
+          height: 50px;
+          margin: 0 auto;
+        }
+      }
+    }
+
+    .sp-colorize-container {
+      border: 1px solid #ccc;
+    }
+  }
+
+  #adminTable {
+    tr, th {
+      border-left: 1px;
+      vertical-align: middle;
+    }
+  }
+
+  .custom-file-label {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: #222;
+  color: #ccc;
+  border-top: 1px solid #000;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      display: flex;
+
+      li {
+        border-right: 1px solid #ccc;
+
+        &:last-child {
+          border-right: none;
+        }
+
+      }
+    }
+
+    a, div {
+      padding: 10px;
+      font-size: 13px;
+      color: #ccc;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

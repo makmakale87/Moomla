@@ -1,0 +1,119 @@
+<form id="adminForm">
+    <div class="card">
+        {{>page_header}}
+        <div class="card-body">
+            <div class="tools mb-3">
+                <div class="row">
+                    <div class="col-3 tools-search">
+                        <div class="input-group input-group-sm">
+                            <input id="search" name="filter[search]" type="text" class="form-control" placeholder="Поиск" value="{{filter.search}}">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit" onclick="$('#search').val('')"><i class="fa fa-times"></i></button>
+                                <button class="btn btn-outline-secondary" type="button"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2 ml-auto text-right">
+                        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#categoriesOptions">Опции</button>
+                    </div>
+                </div>
+            </div>
+            {{#if categories}}
+                <table id="adminTable" width="100%" cellspacing="0" class="table table-bordered table-striped">
+                    <thead>
+                    <tr class="text-center">
+                        <th style="width: 5%"><i class="fa fa-sort"></i></th>
+                        {{#if settings.status}}
+                            <th style="width: 10%">Статус</th>{{/if}}
+                        {{#if settings.image}}
+                            <th style="width: 10%">Изображение</th>{{/if}}
+                        <th>Название</th>
+                        {{#if settings.short_description}}
+                            <th>Краткое описание</th>{{/if}}
+                        <th style="width: 5%"><i class="fa fa-trash"></i></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#tree categories}}
+                        <tr data-id="{{_id}}">
+                            <td class="text-center icon-move"><i class="fa fa-sort"></i></td>
+                            {{#if ../settings.status}}
+                                <td class="text-center">{{{getStatus status}}}</td>{{/if}}
+                            {{#if ../settings.image}}
+                                <td class="text-center">
+                                    {{#if image}}
+                                        <img src="{{image}}" alt="{{title}}" class="img-thumbnail" style="max-height: 80px">
+                                    {{/if}}
+                                </td>
+                            {{/if}}
+                            <td>
+                                <div><a href="?task=edit&id={{_id}}">{{title}}</a></div>
+                                <div class="small">{{alias}}</div>
+                            </td>
+                            {{#if ../settings.short_description}}
+                                <td>{{short_description}}</td>{{/if}}
+                            <td class="text-center">
+                                {{{deleteButton _id}}}
+                            </td>
+                        </tr>
+                    {{/tree}}
+                    </tbody>
+                </table>
+            {{else}}
+                <p>{{title}} не найдены.</p>
+            {{/if}}
+        </div>
+    </div>
+</form>
+
+<!-- Modal -->
+<div class="modal fade" id="categoriesOptions" tabindex="-1" aria-labelledby="categoriesOptionsLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="categoriesOptionsLabel">Выберите колонки для отображения</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="catSettings">
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="status" name="status" {{check settings.status}}>
+                            <label class="custom-control-label" for="status">Статус</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="short_description" name="short_description" {{check settings.short_description}}>
+                            <label class="custom-control-label" for="short_description">Краткое описание</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="image" name="image" {{check settings.image}}>
+                            <label class="custom-control-label" for="image">Изображение</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/assets/{{template}}/js/filterOnMainPage.js"></script>
+<script>
+    const categoriesSettings = $( '#catSettings' );
+
+    categoriesSettings.on( 'change', ( e ) => {
+        $.post(
+           window.location.href + '?task=settings',
+                categoriesSettings.serialize() );
+    } );
+
+    $( '[data-dismiss="modal"]' ).click( () => location.reload() );
+</script>

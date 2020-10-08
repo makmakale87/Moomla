@@ -1,0 +1,16 @@
+<div class="card">
+    <div class="card-body">
+        <div id="adminMooShop" class="adminMooShopList">
+            {{#each ops}}
+                <div class="moo-card">
+                    <a href="{{link}}" class="card text-center">
+                        <div class="card-body">
+                            <img src="{{img}}" alt="{{title}}" class="mb-3">
+                            <p class="card-title">{{title}}</p>
+                        </div>
+                    </a>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

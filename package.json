@@ -1,0 +1,41 @@
+{
+  "name": "moomla_admin_panel",
+  "version": "1.3.24",
+  "description": "Moomla - Admin Panel for Your Shop",
+  "main": "server.js",
+  "scripts": {
+    "server": "nodemon server.js",
+    "client": "npm run dev --prefix client",
+    "start": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": [
+    "moomla",
+    "node js",
+    "express",
+    "admin panel"
+  ],
+  "author": "Makarenko Maksim",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "bcrypt": "^5.0.0",
+    "bootstrap": "^4.5.0",
+    "compression": "^1.7.4",
+    "concurrently": "^5.3.0",
+    "connect-mongo": "^3.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.7-alpha.3",
+    "express-handlebars": "^5.1.0",
+    "express-session": "^1.17.1",
+    "font-awesome": "^4.7.0",
+    "moment": "^2.27.0",
+    "mongoose": "^5.9.21",
+    "serve-favicon": "^2.5.0",
+    "spectrum-colorpicker2": "^2.0.4"
+  }
+}

@@ -1,0 +1,49 @@
+<form id="adminForm">
+    <div class="card">
+        {{>page_header}}
+        {{>shop/extra_fields_nav}}
+        <div class="card-body">
+            <div class="row">
+                <div class="col-3">
+                    <div class="input-group input-group-sm">
+                        {{#select field_id}}
+                            {{{fields}}}
+                        {{/select}}
+                        <div class="input-group-append">
+                            <span class="input-group-text">Характеристики</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            {{#if table}}
+                <table {{{adminTable}}}>
+                    <thead>
+                    <tr class="text-center">
+                        <th style="width: 5%"><i class="fa fa-sort"></i></th>
+                        <th>Название</th>
+                        <th>Характеристика</th>
+                        <th style="width: 5%"><i class="fa fa-trash"></i></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each table}}
+                        <tr data-id="{{_id}}">
+                            <td class="text-center icon-move"><i class="fa fa-sort"></i></td>
+                            <td><a href="?field_id={{field_id._id}}&task=edit&id={{_id}}">{{title}}</a></td>
+                            <td>{{field_id.title}}</td>
+                            <td class="text-center">
+                                {{{deleteButton _id}}}
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            {{else}}
+                <p>Значения характеристик товаров не найдены.</p>
+            {{/if}}
+        </div>
+    </div>
+</form>
+<script src="/assets/{{template}}/js/filterOnMainPage.js"></script>

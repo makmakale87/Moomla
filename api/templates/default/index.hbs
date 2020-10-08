@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+{{>head}}
+<body>
+<header>
+    {{> navbar }}
+</header>
+
+<main>
+    <div class="container my-5">
+        <div class="row">
+            {{#if sidebar}}
+                <div class="col-3">
+                    {{{sidebar}}}
+                </div>
+                <div class="col-9">
+                    {{{ body }}}
+                </div>
+            {{else}}
+                <div class="col">
+                    {{{ body }}}
+                </div>
+            {{/if}}
+        </div>
+    </div>
+</main>
+
+<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false" style="
+position: absolute;
+right: 10px;
+bottom: 40px;
+min-width: 250px;
+"></div>
+
+<footer>
+    <div class="container">
+        <ul class="footer-list">
+            <li>
+                <a href="http://localhost:8080" target="_blank"><i class="fa fa-external-link-alt" aria-hidden="true"></i>
+                    Главная страница</a>
+            </li>
+            {{#if_eq user.role 'admin'}}
+                <li>
+                    <a><span class="badge badge-primary badge-pill">1</span> Администратор</a>
+                </li>
+            {{/if_eq}}
+            <li>
+                <a href="/admin?task=logout"><i class="fa fa-sign-out-alt" aria-hidden="true"></i>
+                    Выйти</a>
+            </li>
+        </ul>
+        <div>
+            Moomla! {{mooVersion}} - &copy; {{currentyear}}
+        </div>
+    </div>
+</footer>
+{{> scripts }}
+</body>
+</html>

@@ -1,0 +1,75 @@
+<form id="adminForm">
+    <div class="card">
+        {{>page_header}}
+        {{>shop/extra_fields_nav}}
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-3 tools-search">
+                    <div class="input-group input-group-sm">
+                        <input id="search" name="filter[search]" type="text" class="form-control" placeholder="Поиск" value="{{filter.search}}">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit" onclick="search.value = '';"><i class="fa fa-times"></i></button>
+                            <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group input-group-sm">
+                        {{#select filter.group}}
+                            {{{groups}}}
+                        {{/select}}
+                        <div class="input-group-append">
+                            <span class="input-group-text">Группы</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{#if table}}
+                <table {{{adminTable}}}>
+                    <thead>
+                    <tr class="text-center">
+                        <th style="width: 5%"><i class="fa fa-sort"></i></th>
+                        <th>Название</th>
+                        <th>Тип</th>
+                        <th>Опции</th>
+                        <th>Категории</th>
+                        <th>Группа</th>
+                        <th style="width: 5%"><i class="fa fa-trash"></i></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each table}}
+                        <tr data-id="{{_id}}">
+                            <td class="text-center icon-move"><i class="fa fa-sort"></i></td>
+                            <td><a href="?task=edit&id={{_id}}">{{title}}</a></td>
+                            <td>
+                                {{#if_eq type 0}}
+                                    Список
+                                {{else}}
+                                    {{#if_eq type 1}}Множественный список{{else}}Текст{{/if_eq}}
+                                {{/if_eq}}
+                            </td>
+                            <td class="text-center">
+                                {{#if_eq type 2}}
+                                {{else}}
+                                    <a href="/admin/shop/productfieldvalues?field_id={{_id}}">Опции</a>
+                                {{/if_eq}}
+                            </td>
+                            <td>{{#if_eq allcats 0}}Все{{else}}Выбранные{{/if_eq}}</td>
+                            <td>{{group.title}}</td>
+                            <td class="text-center">
+                                {{{deleteButton _id}}}
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            {{else}}
+                <p> Характеристики не найдены.</p>
+            {{/if}}
+        </div>
+    </div>
+</form>
+
+<script src="/assets/{{template}}/js/filterOnMainPage.js"></script>

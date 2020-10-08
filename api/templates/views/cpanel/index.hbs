@@ -1,0 +1,74 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <div id="adminMooShop" class="adminMooShopList">
+                    {{#each items}}
+                        <div class="moo-card">
+                            <a href="{{link}}" class="card text-center">
+                                <div class="card-body">
+                                    <img src="{{img}}" alt="{{title}}">
+                                    <p class="card-title">{{title}}</p>
+                                </div>
+                            </a>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+            <div class="col text-center">
+                <h1>Добро пожаловать в {{title}}!</h1>
+                <p class="lead"><img src="/shop/images/main.png" alt="MooShop" class="img-fluid"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="row">
+        <div class="col-7">
+            <div class="card-body">
+                <table class="table table-striped table-bordered table-sm">
+                    <thead class="table-dark">
+                    <tr>
+                        <th colspan="2">Системная информация</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="w-25">ОС</td>
+                        <td>{{ info.OS }}</td>
+                    </tr>
+                    <tr>
+                        <td>NodeJS</td>
+                        <td>{{ info.NodeJS_version }}</td>
+                    </tr>
+                    <tr>
+                        <td>БД</td>
+                        <td>{{ info.DB }}</td>
+                    </tr>
+                    <tr>
+                        <td>Moomla ver.</td>
+                        <td>{{ info.MoomlaVersion }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="card-body">
+                <table class="table table-bordered table-striped table-sm">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Авторизованные пользователи</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><a href="/admin/users/?task=edit&id={{user._id}}">{{user.name}}</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

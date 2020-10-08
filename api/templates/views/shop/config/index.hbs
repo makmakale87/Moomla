@@ -1,0 +1,334 @@
+<form id="adminForm" enctype="multipart/form-data">
+    <div class="card">
+        {{>page_header}}
+
+        <div class="card-body">
+            <ul class="nav nav-pills" id="mShopConfig" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#adminfunction" role="tab" aria-selected="true">Функции магазина</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#catprod" role="tab" aria-selected="false">Товар</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="adminfunction">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <legend>Основное</legend>
+                            <hr>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="enable_wishlist" name="enable_wishlist" {{check form.enable_wishlist}}>
+                                    <label class="custom-control-label" for="enable_wishlist">Включить список пожеланий</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="use_rabatt_code" name="use_rabatt_code" {{check form.use_rabatt_code}}>
+                                    <label class="custom-control-label" for="use_rabatt_code">Использовать купоны</label>
+                                </div>
+                            </div>
+                            <div class="form-group form-row">
+                                <div class="col"><label for="shop_user_guest">Покупка без регистрации</label></div>
+                                <div class="col">
+                                    {{#select form.shop_user_guest}}
+                                        <select id="shop_user_guest" name="shop_user_guest" class="custom-select custom-select-sm">
+                                            <option value="0" selected>Регистрация обязательна</option>
+                                            <option value="1">Возможно пропустить регистрацию</option>
+                                            <option value="2">Без регистрации</option>
+                                        </select>
+                                    {{/select}}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="admin_show_languages" name="admin_show_languages" {{check form.admin_show_languages}}>
+                                    <label class="custom-control-label" for="admin_show_languages">Языки</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="without_shipping" name="without_shipping" {{check form.without_shipping}}>
+                                    <label class="custom-control-label" for="without_shipping">Доставка</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="without_payment" name="without_payment" {{check form.without_payment}}>
+                                    <label class="custom-control-label" for="without_payment">Системы оплаты</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="admin_show_vendors" name="admin_show_vendors" {{check form.admin_show_vendors}}>
+                                    <label class="custom-control-label" for="admin_show_vendors">Продавцы</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="admin_show_units" name="admin_show_units" {{check form.admin_show_units}}>
+                                    <label class="custom-control-label" for="admin_show_units">Единица измерения</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="tax" name="tax" {{check form.tax}}>
+                                    <label class="custom-control-label" for="tax">Налог</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="stock" name="stock" {{check form.stock}}>
+                                    <label class="custom-control-label" for="stock">Склад</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <legend>Товары</legend>
+                            <hr>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="admin_show_delivery_time" name="admin_show_delivery_time" {{check form.admin_show_delivery_time}}>
+                                    <label class="custom-control-label" for="admin_show_delivery_time">Срок поставки</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="admin_show_product_video" name="admin_show_product_video" {{check form.admin_show_product_video}}>
+                                    <label class="custom-control-label" for="admin_show_product_video">Видео</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="admin_show_product_related" name="admin_show_product_related" {{check form.admin_show_product_related}}>
+                                    <label class="custom-control-label" for="admin_show_product_related">Сопутствующий</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="admin_show_product_files" name="admin_show_product_files" {{check form.admin_show_product_files}}>
+                                    <label class="custom-control-label" for="admin_show_product_files">Файлы</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="admin_show_product_labels" name="admin_show_product_labels" {{check form.admin_show_product_labels}}>
+                                    <label class="custom-control-label" for="admin_show_product_labels">Метка</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="admin_show_product_basic_price" name="admin_show_product_basic_price" {{check form.admin_show_product_basic_price}}>
+                                    <label class="custom-control-label" for="admin_show_product_basic_price">Новая цена</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="admin_show_product_extra_field" name="admin_show_product_extra_field" {{check form.admin_show_product_extra_field}}>
+                                    <label class="custom-control-label" for="admin_show_product_extra_field">Характеристики</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="admin_show_weight" name="admin_show_weight" {{check form.admin_show_weight}}>
+                                    <label class="custom-control-label" for="admin_show_weight">Вес</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <legend>Дополнительно</legend>
+                            <hr>
+                            <div class="form-group">
+                                <div class="input-group flex-nowrap">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">@ E-mail для заказов</span>
+                                    </div>
+                                    <input type="email" name="contact_email" class="form-control" placeholder="E-mail" value="{{form.contact_email}}">
+                                </div>
+                            </div>
+                            <div class="form-group form-row">
+                                <div class="col"><label for="defaultLanguage">Язык по умолчанию</label></div>
+                                <div class="col">
+                                    {{#select form.defaultLanguage}}
+                                        <select id="defaultLanguage" name="defaultLanguage" class="custom-select custom-select-sm">
+                                            <option value="ru-RU" selected="selected">Русский</option>
+                                            <option value="en-GB">English</option>
+                                        </select>
+                                    {{/select}}
+                                </div>
+                            </div>
+                            <div class="form-group form-row">
+                                <div class="col"><label for="display_price_admin">Отображение цен в админке</label></div>
+                                <div class="col">
+                                    {{#select form.display_price_admin}}
+                                        <select id="display_price_admin" name="display_price_admin" class="custom-select custom-select-sm">
+                                            <option value="0" selected="selected">Цена c НДС</option>
+                                            <option value="1">Цена без НДС</option>
+                                        </select>
+                                    {{/select}}
+                                </div>
+                            </div>
+                            <div class="form-group form-row">
+                                <div class="col"><label for="display_price_front">Отображение цен на сайте</label></div>
+                                <div class="col">
+                                    {{#select form.display_price_front}}
+                                        <select id="display_price_front" name="display_price_front" class="custom-select custom-select-sm">
+                                            <option value="0" selected="selected">Цена c НДС</option>
+                                            <option value="1">Цена без НДС</option>
+                                        </select>
+                                    {{/select}}
+                                </div>
+                            </div>
+                            <div class="form-group form-row">
+                                <div class="col"><label for="date_format">Формат даты</label></div>
+                                <div class="col">
+                                    {{#select form.date_format}}
+                                        <select id="date_format" name="date_format" class="custom-select custom-select-sm">
+                                            <option value="DD.MM.YYYY hh:mm" selected="selected">26.08.2020 21:24</option>
+                                            <option value="DD.MM.YYYY">26.08.2020</option>
+                                            <option value="MM/DD/YYYY hh:mm">08/26/2020 21:24</option>
+                                            <option value="MM/DD/YYYY">08/26/2020</option>
+                                        </select>
+                                    {{/select}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="catprod">
+                <div class="card-body">
+                    <div class="col-6">
+                        <legend>Список товаров</legend>
+                        <hr>
+                        <div class="form-group row">
+                            <label for="count_products_to_page" class="col-sm-6 col-form-label">Количество товаров на странице</label>
+                            <div class="col-sm-6">
+                                {{#select form.count_products_to_page}}
+                                    <select class="custom-select" name="count_products_to_page" id="count_products_to_page">
+                                        <option value="30" selected>30</option>
+                                        <option value="60">60</option>
+                                        <option value="90">90</option>
+                                    </select>
+                                {{/select}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="show_buy_in_category" name="show_buy_in_category" {{check form.show_buy_in_category}}>
+                                <label class="custom-control-label" for="show_buy_in_category">Показать кнопку купить для списка товаров</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="show_sort_product" name="show_sort_product" {{check form.show_sort_product}}>
+                                <label class="custom-control-label" for="show_sort_product">Возможность сортировки товаров</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="show_count_select_products" name="show_count_select_products" {{check form.show_count_select_products}}>
+                                <label class="custom-control-label" for="show_count_select_products">Выбор количества товаров на странице</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="show_product_list_filters" name="show_product_list_filters" {{check form.show_product_list_filters}}>
+                                <label class="custom-control-label" for="show_product_list_filters">Показать фильтры</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="product_list_show_weight" name="product_list_show_weight" {{check form.product_list_show_weight}}>
+                                <label class="custom-control-label" for="product_list_show_weight">Показать вес товара</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="product_list_show_manufacturer" name="product_list_show_manufacturer" {{check form.product_list_show_manufacturer}}>
+                                <label class="custom-control-label" for="product_list_show_manufacturer">Показать производителя</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="product_list_show_product_code" name="product_list_show_product_code" {{check form.product_list_show_product_code}}>
+                                <label class="custom-control-label" for="product_list_show_product_code">Показать Код товара</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="product_list_show_qty_stock" name="product_list_show_qty_stock" {{check form.product_list_show_qty_stock}}>
+                                <label class="custom-control-label" for="product_list_show_qty_stock">Количество на складе</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <legend>Список товаров / Товар</legend>
+                        <hr>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input id="show_tax_in_product" name="show_tax_in_product" {{check form.show_tax_in_product}} type="checkbox" class="custom-control-input">
+                                <label for="show_tax_in_product" class="custom-control-label">Показать НДС</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input id="show_tax_product_in_cart" name="show_tax_product_in_cart" {{check form.show_tax_product_in_cart}} type="checkbox" class="custom-control-input">
+                                <label for="show_tax_product_in_cart" class="custom-control-label">Показать НДС для товаров в корзине</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input id="show_plus_shipping_in_product" name="show_plus_shipping_in_product" {{check form.show_plus_shipping_in_product}} type="checkbox" class="custom-control-input">
+                                <label for="show_plus_shipping_in_product" class="custom-control-label">Показать "плюс доставка"</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input id="hide_product_not_avaible_stock" name="hide_product_not_avaible_stock" {{check form.hide_product_not_avaible_stock}} type="checkbox" class="custom-control-input">
+                                <label for="hide_product_not_avaible_stock" class="custom-control-label">Скрыть товары, которые не доступны на складе</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input id="hide_buy_not_avaible_stock" name="hide_buy_not_avaible_stock" {{check form.hide_buy_not_avaible_stock}} type="checkbox" class="custom-control-input">
+                                <label for="hide_buy_not_avaible_stock" class="custom-control-label">Скрыть кнопку купить, если товара нет на складе</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input id="show_delivery_time" name="show_delivery_time" {{check form.show_delivery_time}} type="checkbox" class="custom-control-input">
+                                <label for="show_delivery_time" class="custom-control-label">Показать "Срок поставки"</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input id="product_hide_price_null" name="product_hide_price_null" {{check form.product_hide_price_null}} type="checkbox" class="custom-control-input">
+                                <label for="product_hide_price_null" class="custom-control-label">Скрыть цену = 0</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $( '#adminForm' ).change( ( e ) => {
+        let data = {};
+        data.name = e.target.name;
+        data.value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+
+        $.ajax( {
+            url      : window.location.href,
+            type     : 'post',
+            data     : data,
+            dataType : 'json'
+        } );
+    } );
+</script>

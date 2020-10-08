@@ -1,0 +1,37 @@
+<form id="adminForm" enctype="multipart/form-data" class="needs-validation">
+    <div id="adminMooShop" class="card">
+        {{>page_header}}
+        <div class="card-body">
+            <div class="form-group row">
+                <label for="title" class="col-sm-2 col-form-label">Заголовок*</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="title" id="title" value="{{form.title}}" placeholder="Заголовок" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="title" class="col-sm-2 col-form-label">Код*</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="currency_code" id="currency_code" value="{{form.currency_code}}" placeholder="Код" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="title" class="col-sm-2 col-form-label">Код (Числовой)</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="currency_code_num" id="currency_code_num" value="{{form.currency_code_num}}" placeholder="Код (Числовой)">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="title" class="col-sm-2 col-form-label">Обменный курс*</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="currency_value" id="currency_value" value="{{#if form.currency_value}}{{form.currency_value}}{{else}}1{{/if}}" placeholder="Обменный курс" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="multiplicity" class="col-sm-2 col-form-label">Кратность</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="multiplicity" id="multiplicity" value="{{#if form.multiplicity}}{{form.multiplicity}}{{else}}1{{/if}}" placeholder="Кратность">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
